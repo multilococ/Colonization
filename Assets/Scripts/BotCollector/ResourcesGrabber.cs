@@ -8,13 +8,18 @@ public class ResourcesGrabber : MonoBehaviour
     [SerializeField] private Transform _container;
 
     private GameResource _grabbedResource;
+    private BoxCollider _grabCollider;
+
     private bool _hasResource;
+
     public bool HasResource => _hasResource;
 
     public event Action Grabbed;
 
     private void Awake()
     {
+        _grabCollider = GetComponent<BoxCollider>();
+        DisableGraberCollider();
         _hasResource = false;
     }
 
@@ -28,20 +33,33 @@ public class ResourcesGrabber : MonoBehaviour
                 _hasResource = true;
                 _grabbedResource = gameResource;
                 gameResource.Grabb();
-                PutInContainer();
+                PutResourceInContainer();
             }
         }
     }
 
     public GameResource GetResource() 
     {
+        GameResource resource = _grabbedResource;
+        
+        _grabbedResource = null;
         _hasResource = false;
         _container.DetachChildren();
 
-        return _grabbedResource;
+        return resource;
     }
 
-    private void PutInContainer()
+    public void EnableGraberCollider() 
+    {
+        _grabCollider.enabled = true;
+    }
+
+    public void DisableGraberCollider() 
+    {
+        _grabCollider.enabled = false;
+    }
+
+    private void PutResourceInContainer()
     {
         if (_grabbedResource != null)
         {

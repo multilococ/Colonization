@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,26 @@ public class ResourceScanner : MonoBehaviour
 
     private bool _isAvailiable;
 
+    public event Action<bool> GhangeAvailiable;
+
     private void Awake()
     {
         _isAvailiable = true;
+        GhangeAvailiable?.Invoke(_isAvailiable); 
         _waitForSeconds = new WaitForSeconds(_reloadTime);
+    }
+
+    public GameResource GetResource() 
+    {
+        GameResource gameResource = null;
+
+        if (_scanedResources.Count > 0)
+        {
+            gameResource = _scanedResources[0];
+            _scanedResources.Remove(gameResource);
+        }
+
+        return gameResource;
     }
 
     public void ScanTerritory()
@@ -41,6 +58,7 @@ public class ResourceScanner : MonoBehaviour
             }
 
             _isAvailiable = false;
+            GhangeAvailiable?.Invoke(_isAvailiable);
             StartCoroutine(Reload());
         }
     }
@@ -50,5 +68,6 @@ public class ResourceScanner : MonoBehaviour
         yield return _waitForSeconds;
 
         _isAvailiable = true;
+        GhangeAvailiable?.Invoke(_isAvailiable);
     }
 }

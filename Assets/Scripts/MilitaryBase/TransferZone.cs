@@ -13,6 +13,7 @@ public class TransferZone : MonoBehaviour
             if (resourcesGrabber.HasResource)
             {
                 GameResource gameResource = resourcesGrabber.GetResource();
+
                 Transfered?.Invoke(gameResource);
                 gameResource.Reset();
             }

@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public abstract class GameResource : MonoBehaviour
 {
     private int _quantity;
-    private int _maxQuantity = 10;
+    private int _maxQuantity = 3;
     private int _minQuantity = 1;
 
     private bool _isGrabed;
@@ -15,21 +16,22 @@ public abstract class GameResource : MonoBehaviour
     public bool IsGrabed => _isGrabed;
     public bool IsScaned => _isScaned;
 
-    private void Awake()
-    {
-        Init();
-    }
+    public event Action<bool> Detected;
+    public event Action<GameResource> Died;
 
-    public void Init()
+    public void Init(Vector3 spawmPosition)
     {
-        _quantity = Random.Range(_minQuantity, _maxQuantity);
+        transform.position = spawmPosition;
+        _quantity = UnityEngine.Random.Range(_minQuantity, _maxQuantity);
         _isGrabed = false;
         _isScaned = false;
+        Detected?.Invoke(false);
     }
 
     public void Scan() 
     {
         _isScaned = true;
+        Detected?.Invoke(true);
     }
 
     public void Grabb() 
@@ -39,6 +41,6 @@ public abstract class GameResource : MonoBehaviour
 
     public void Reset()
     {
-        gameObject.SetActive(false);
+        Died?.Invoke(this);
     }
 }
