@@ -5,7 +5,7 @@ public class ResourceSpawner : MonoBehaviour
 {
     [SerializeField] private GameResourcePool _pool;
     [SerializeField] private SpawnArea _spawnArea;  
-    [SerializeField] private float _delay = 3f;
+    [SerializeField] private float _delay = 1.5f;
 
     private WaitForSeconds _waitForSeconds;
 

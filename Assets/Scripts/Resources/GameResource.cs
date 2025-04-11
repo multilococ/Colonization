@@ -8,39 +8,31 @@ public abstract class GameResource : MonoBehaviour
     private int _maxQuantity = 3;
     private int _minQuantity = 1;
 
-    private bool _isGrabed;
-    private bool _isScaned;
+    private bool _isDetected;
+
+    public event Action<bool> Detected;
+    public event Action<GameResource> Reseted;
 
     public int Quantity => _quantity;
 
-    public bool IsGrabed => _isGrabed;
-    public bool IsScaned => _isScaned;
-
-    public event Action<bool> Detected;
-    public event Action<GameResource> Died;
+    public bool IsDtetected => _isDetected;
 
     public void Init(Vector3 spawmPosition)
     {
         transform.position = spawmPosition;
         _quantity = UnityEngine.Random.Range(_minQuantity, _maxQuantity);
-        _isGrabed = false;
-        _isScaned = false;
+        _isDetected = false;
         Detected?.Invoke(false);
     }
 
-    public void Scan() 
+    public void Detect() 
     {
-        _isScaned = true;
+        _isDetected = true;
         Detected?.Invoke(true);
-    }
-
-    public void Grabb() 
-    {
-        _isGrabed = true;
     }
 
     public void Reset()
     {
-        Died?.Invoke(this);
+        Reseted?.Invoke(this);
     }
 }

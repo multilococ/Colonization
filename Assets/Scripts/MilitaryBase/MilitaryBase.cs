@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MilitaryBase : MonoBehaviour
@@ -5,9 +6,29 @@ public class MilitaryBase : MonoBehaviour
     [SerializeField] private Barracks _barracks;
     [SerializeField] private ResourceScanner _resourceScanner;
 
-    public void GetResource() 
+    private float _workDelay = 1f;
+
+    private void Start()
     {
-        if (_barracks.CheckFreeBots())
+        StartCoroutine(Work());
+    }
+
+    private IEnumerator Work()
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(_workDelay);
+
+        while (enabled) 
+        {
+            yield return waitForSeconds;
+
+            _resourceScanner.ScanTerritory();
+            CollectResource();
+        }
+    }
+
+    private void CollectResource() 
+    {
+        if (_barracks.InspectFreeBots())
         {
             GameResource freeResource = _resourceScanner.GetResource();
 

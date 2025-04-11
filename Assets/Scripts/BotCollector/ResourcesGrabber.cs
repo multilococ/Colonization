@@ -12,9 +12,9 @@ public class ResourcesGrabber : MonoBehaviour
 
     private bool _hasResource;
 
-    public bool HasResource => _hasResource;
-
     public event Action Grabbed;
+
+    public bool HasResource => _hasResource;
 
     private void Awake()
     {
@@ -27,12 +27,11 @@ public class ResourcesGrabber : MonoBehaviour
     {
         if (collider.gameObject.TryGetComponent(out GameResource gameResource))
         {
-            if (gameResource.IsGrabed == false && _hasResource == false)
+            if (_hasResource == false)
             {
                 Grabbed?.Invoke();
                 _hasResource = true;
                 _grabbedResource = gameResource;
-                gameResource.Grabb();
                 PutResourceInContainer();
             }
         }

@@ -21,7 +21,7 @@ public class GameResourcePool : MonoBehaviour
         GameResource resource = _resourcePool.Get();
 
         resource.Init(position);
-        resource.Died += ReleaseResource;
+        resource.Reseted += ReleaseResource;
     }
 
     private ObjectPool<GameResource> CreatePool() 
@@ -52,7 +52,7 @@ public class GameResourcePool : MonoBehaviour
 
     private void ReleaseResource(GameResource resource) 
     {
-        resource.Died -= ReleaseResource;
+        resource.Reseted -= ReleaseResource;
         _resourcePool.Release(resource);
     }
 }

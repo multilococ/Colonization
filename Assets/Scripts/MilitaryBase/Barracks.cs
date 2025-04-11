@@ -18,7 +18,7 @@ public class Barracks : MonoBehaviour
         }
     }
 
-    public bool CheckFreeBots() 
+    public bool InspectFreeBots() 
     {
         foreach (BotCollector bot in _bots)
         {
