@@ -46,6 +46,8 @@ public class MilitaryBase : MonoBehaviour
         {
             yield return waitForSeconds;
 
+            CollectResource();
+
             if (_flagInstaller != null && _baseCreater != null)
             {
                 if (_flagInstaller.Instaled == true)
@@ -53,8 +55,7 @@ public class MilitaryBase : MonoBehaviour
                     _baseCreater.SendFreeBotTo(_flag.transform);
                 }
                 else
-                {
-                    CollectResource();
+                {       
                     CreateNewBot();
                 }
             }
