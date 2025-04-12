@@ -35,14 +35,13 @@ public class FlagInstaller : MonoBehaviour
         }
     }
 
-    private void Instal() 
+    public void Disable() 
     {
-        if (_isEnabled)
-        {
-            _isEnabled = false;
-            _instaled = true;
-        }
+        _isEnabled = false;
+        _flag.gameObject.SetActive(false);
+        _instaled = false;
     }
+
 
     public void Switch()
     {
@@ -55,17 +54,19 @@ public class FlagInstaller : MonoBehaviour
             Disable();
         }
     }
+   
+    private void Instal() 
+    {
+        if (_isEnabled)
+        {
+            _isEnabled = false;
+            _instaled = true;
+        }
+    }
 
     private void Enable() 
     {
         _isEnabled = true;
         _flag.gameObject.SetActive(true);
-    }
-
-    private void Disable() 
-    {
-        _isEnabled = false;
-        _flag.gameObject.SetActive(false);
-        _instaled = false;
     }
 }

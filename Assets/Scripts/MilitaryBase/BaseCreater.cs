@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BaseCreater : MonoBehaviour
@@ -11,6 +12,8 @@ public class BaseCreater : MonoBehaviour
     private int _oilPrice = 5;
     private int _waterPrice = 5;
     private int _supplyPrice = 5;
+
+    public event Action Created;
 
     public void SendFreeBotTo(Transform point) 
     {
@@ -33,5 +36,6 @@ public class BaseCreater : MonoBehaviour
 
         militaryBase.AcceptBot(_freeBot);
         _freeBot = null;
+        Created?.Invoke();
     }
 }

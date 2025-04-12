@@ -21,9 +21,21 @@ public class MilitaryBase : MonoBehaviour
         StartCoroutine(Work());
     }
 
-    public void AcceptBot(BotCollector botCollector) 
+    private void OnEnable()
     {
-        _barracks.AddBot(botCollector); 
+        if (_flagInstaller != null)
+            _baseCreater.Created += _flagInstaller.Disable;
+    }
+
+    private void OnDisable()
+    {
+        if (_flagInstaller != null)
+            _baseCreater.Created -= _flagInstaller.Disable;
+    }
+
+    public void AcceptBot(BotCollector botCollector)
+    {
+        _barracks.AddBot(botCollector);
     }
 
     private IEnumerator Work()
@@ -34,31 +46,31 @@ public class MilitaryBase : MonoBehaviour
         {
             yield return waitForSeconds;
 
-            CollectResource();
-
-            if ( _flagInstaller != null && _baseCreater != null)
+            if (_flagInstaller != null && _baseCreater != null)
             {
                 if (_flagInstaller.Instaled == true)
                 {
                     _baseCreater.SendFreeBotTo(_flag.transform);
                 }
-                else 
+                else
                 {
+                    CollectResource();
                     CreateNewBot();
                 }
             }
             else
             {
+                CollectResource();
                 CreateNewBot();
             }
         }
     }
 
-    private IEnumerator Scan() 
+    private IEnumerator Scan()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(_scanDelay);
 
-        while (enabled) 
+        while (enabled)
         {
             yield return waitForSeconds;
 
