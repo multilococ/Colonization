@@ -42,7 +42,6 @@ public class FlagInstaller : MonoBehaviour
         _instaled = false;
     }
 
-
     public void Switch()
     {
         if (_isEnabled == false)
