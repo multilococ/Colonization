@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public abstract class GameResource : MonoBehaviour
+public class GameResource : MonoBehaviour
 {
+   [SerializeField] private ResourceType _resourceType;
+
     private int _quantity;
     private int _maxQuantity = 3;
     private int _minQuantity = 1;
@@ -12,6 +14,8 @@ public abstract class GameResource : MonoBehaviour
 
     public event Action<bool> Detected;
     public event Action<GameResource> Reseted;
+
+    public ResourceType ResourceType => _resourceType; 
 
     public int Quantity => _quantity;
 
@@ -22,13 +26,13 @@ public abstract class GameResource : MonoBehaviour
         transform.position = spawmPosition;
         _quantity = UnityEngine.Random.Range(_minQuantity, _maxQuantity);
         _isDetected = false;
-        Detected?.Invoke(false);
+        Detected?.Invoke(_isDetected);
     }
 
     public void Detect() 
     {
         _isDetected = true;
-        Detected?.Invoke(true);
+        Detected?.Invoke(_isDetected);
     }
 
     public void Reset()

@@ -1,26 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceScanner : MonoBehaviour
 {
-    [SerializeField] private List<GameResource> _scanedResources;
+    [SerializeField] private ScanedResourceStorage _scanedResourceStorage;
     [SerializeField] private LayerMask _resourceMask;
     [SerializeField] private float _range;
-
-    public GameResource GetResource()
-    {
-        GameResource gameResource = null;
-
-        if (_scanedResources.Count > 0)
-        {
-            gameResource = _scanedResources[0];
-            _scanedResources.Remove(gameResource);
-        }
-
-        return gameResource;
-    }
 
     public void ScanTerritory()
     {
@@ -35,7 +19,7 @@ public class ResourceScanner : MonoBehaviour
                     if (gameResource.IsDtetected == false)
                     {
                         gameResource.Detect();
-                        _scanedResources.Add(gameResource);
+                        _scanedResourceStorage.Add(gameResource);
                     }
                 }
             }

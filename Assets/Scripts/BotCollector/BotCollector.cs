@@ -1,16 +1,19 @@
+using System;
 using UnityEngine;
 
 public class BotCollector : MonoBehaviour
 {
     [SerializeField] private ResourcesGrabber _resourcesGrabber;
     [SerializeField] private BotMover _botMover;
-    [SerializeField] private Transform _home;
+    [SerializeField] private BotHomePoint _homePoint;
 
     private Transform _target;
 
     private float _minDistance = 0.1f;
 
     private bool _isAvaliable;
+
+    public event Action<Vector3> Arrived;
 
     public bool IsAvaliable => _isAvaliable;
 
@@ -35,8 +38,9 @@ public class BotCollector : MonoBehaviour
         {
             if (transform.position.IsEnoughClose(_target.position, _minDistance))
             {
-                if (_target != _home)
+                if (_target != _homePoint.transform)
                 {
+                    Arrived?.Invoke(transform.position);
                     _resourcesGrabber.EnableGraberCollider();
                 }
                 else
@@ -55,9 +59,20 @@ public class BotCollector : MonoBehaviour
         _isAvaliable = false;
     }
 
+    public void SetHomePoint(BotHomePoint botHomePoint) 
+    {
+        _homePoint = botHomePoint;
+        _homePoint.Occupy();
+    }
+
+    public void ReleaseHomePoint() 
+    {
+        _homePoint.Release();
+    }
+
     private void ReturnToHome()
     {
-        _target = _home;
-        _botMover.SetTarget(_home);
+        _target = _homePoint.transform;
+        _botMover.SetTarget(_homePoint.transform);
     }
 }

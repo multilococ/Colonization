@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1479585107063898635}
   - component: {fileID: 1821852882580050068}
-  - component: {fileID: 1961965423184254110}
+  - component: {fileID: 8240221846441921636}
   m_Layer: 3
   m_Name: SupplyResurce
   m_TagString: Untagged
@@ -56,7 +56,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5112534, y: 1.1624247, z: 1.85992}
   m_Center: {x: 0.11057854, y: 0.6258431, z: -0.036682963}
---- !u!114 &1961965423184254110
+--- !u!114 &8240221846441921636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,9 +65,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 516213208087419038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26a5283b9b7a9f0439b41f4c2e596fea, type: 3}
+  m_Script: {fileID: 11500000, guid: 7818363e61a8c83498a28b7a26706584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _resourceType: 1
 --- !u!1 &6207240557382303166
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 4119450059028056308}
-  _gameResource: {fileID: 1961965423184254110}
+  _gameResource: {fileID: 8240221846441921636}
 --- !u!1001 &8279237105417072187
 PrefabInstance:
   m_ObjectHideFlags: 0
