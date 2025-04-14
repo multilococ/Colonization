@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class BotHomePoint : MonoBehaviour, ITarget
+public class BotHomePoint : MonoBehaviour
 {
     [SerializeField] private bool _isFree;
-
-    public Transform Transform => transform;
 
     public bool IsFree => _isFree;
 

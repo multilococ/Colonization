@@ -1,6 +1,5 @@
 using UnityEngine;
 
-public class Flag : MonoBehaviour, ITarget
+public class Flag : MonoBehaviour
 {
-  public Transform Transform => transform;
 }

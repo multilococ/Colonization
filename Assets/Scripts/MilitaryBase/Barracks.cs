@@ -8,7 +8,7 @@ public class Barracks : MonoBehaviour
 
     public int BotsCount => _bots.Count;
 
-    public void SendFreeBotTo(ITarget target) 
+    public void SendFreeBotTo(Transform target) 
     {
         foreach (BotCollector bot in _bots) 
         {
@@ -42,7 +42,7 @@ public class Barracks : MonoBehaviour
             {
                 _bots.Add(botCollector);
                 botCollector.SetHomePoint(homePoint);
-                botCollector.GoTo(homePoint);
+                botCollector.GoTo(homePoint.transform);
                 homePoint.Occupy();
 
                 break;
@@ -63,7 +63,7 @@ public class Barracks : MonoBehaviour
         }
 
         _bots.Remove(botCollector);
-        botCollector?.ReleaseHomePoint();
+        botCollector.ReleaseHomePoint();
 
         return botCollector;
     }

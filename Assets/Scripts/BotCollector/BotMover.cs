@@ -1,48 +1,25 @@
-using System.Collections;
 using UnityEngine;
 
 public class BotMover : MonoBehaviour
 {
-  [SerializeField] private float _speed = 10f;
-  [SerializeField] private float _minDistance = 0.1f;
+    [SerializeField] private float _speed = 10f;
+    
+    private Transform _target;
 
-  private Transform _target;
-  private Coroutine _moveCoroutine;
-
-  public void SetTarget(Transform target)
-  {
-    _target = target;
-
-    if (_moveCoroutine != null)
+    private void Update()
     {
-      StopCoroutine(_moveCoroutine);
+        if (_target != null)
+            MoveTo();
     }
 
-    if (_target != null)
+    public void SetTarget(Transform target) 
     {
-      _moveCoroutine = StartCoroutine(MoveToTarget());
+        _target = target;
     }
-  }
 
-  public bool HasTarget()
-  {
-    return _target != null;
-  }
-
-  private IEnumerator MoveToTarget()
-  {
-    while (_target != null)
+    private void MoveTo()
     {
-      if (transform.position.IsEnoughClose(_target.position, _minDistance))
-      {
-        _target = null;
-        yield break;
-      }
-
-      transform.LookAt(_target);
-      transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
-
-      yield return null;
+        transform.LookAt(_target);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
     }
-  }
 }

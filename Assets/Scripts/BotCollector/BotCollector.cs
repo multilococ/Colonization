@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BotCollector : MonoBehaviour
@@ -10,27 +8,22 @@ public class BotCollector : MonoBehaviour
     [SerializeField] private BotHomePoint _homePoint;
     [SerializeField] private BaseSpawner _spawner;
 
-    private ITarget _currentTarget;
+    private Transform _target;
+
+    private float _minDistance = 0.1f;
+
     private bool _isAvaliable;
 
-    private readonly Dictionary<Type, ITargetStrategy> _strategies = new Dictionary<Type, ITargetStrategy>
-    {
-        { typeof(Flag), new SpawnBaseStrategy() },
-        { typeof(BotHomePoint), new HomePointStrategy() },
-        { typeof(GameResource), new ResourceStrategy() }
-    };
-
+    public event Action<Vector3> Arrived;
     public event Action BaseCreated;
 
     public bool IsAvaliable => _isAvaliable;
-    
-    public ResourcesGrabber ResourcesGrabber => _resourcesGrabber;
 
     private void Awake()
     {
         _isAvaliable = true;
 
-        if (_homePoint != null)
+        if(_homePoint != null)
         {
             _homePoint.Occupy();
         }
@@ -46,72 +39,54 @@ public class BotCollector : MonoBehaviour
         _resourcesGrabber.Grabbed -= ReturnToHome;
     }
 
-    public void GoTo(ITarget target)
+    private void Update()
     {
-        if (!_isAvaliable || target == null)
-            return;
+        if (_target != null)
+        {
+            if (transform.position.IsEnoughClose(_target.position, _minDistance))
+            {
+                if (_target != _homePoint.transform)
+                {
+                    Arrived?.Invoke(transform.position);
+                    _resourcesGrabber.EnableGraberCollider();
+                }
+                else
+                {
+                    _isAvaliable = true;
+                    _resourcesGrabber.DisableGraberCollider();
+                }
+            }
+        }
+    }
 
-        _currentTarget = target;
+    public void GoTo(Transform target)
+    {
+        _target = target;
+        _botMover.SetTarget(_target);
         _isAvaliable = false;
-
-        StartCoroutine(GoToTarget());
     }
 
-    private IEnumerator GoToTarget()
-    {
-        _botMover.SetTarget(_currentTarget.Transform);
-
-        while (_botMover.HasTarget())
-        {
-            yield return null;
-        }
-
-        if (_currentTarget == null)
-            yield break;
-        
-        Type targetType = _currentTarget.GetType();
-        
-        if (_strategies.TryGetValue(targetType, out ITargetStrategy strategy))
-        {
-            strategy.OnTargetReached(this);
-        }
-
-        _currentTarget = null;
-    }
-
-    public void SetHomePoint(BotHomePoint botHomePoint)
+    public void SetHomePoint(BotHomePoint botHomePoint) 
     {
         _homePoint = botHomePoint;
-        if (_homePoint != null)
-        {
-            _homePoint.Occupy();
-        }
+        _homePoint.Occupy();
     }
 
-    public void ReleaseHomePoint()
+    public void ReleaseHomePoint() 
     {
-        if (_homePoint != null)
-        {
-            _homePoint.Release();
-        }
+        _homePoint.Release();
     }
 
-    public void SpawnBase(Vector3 basePosition)
+    public void SpawnBase(Vector3 basePositon) 
     {
-        _spawner.Spawn(basePosition, this);
+        Arrived -= SpawnBase;
+        _spawner.Spawn(basePositon, this);
         BaseCreated?.Invoke();
-    }
-
-    public void SetAvailable(bool isAvailable)
-    {
-        _isAvaliable = isAvailable;
     }
 
     private void ReturnToHome()
     {
-        if (_homePoint != null)
-        {
-            GoTo(_homePoint);
-        }
+        _target = _homePoint.transform;
+        _botMover.SetTarget(_homePoint.transform);
     }
 }
