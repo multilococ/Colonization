@@ -6,10 +6,10 @@ public class BotMover : MonoBehaviour
   [SerializeField] private float _speed = 10f;
   [SerializeField] private float _minDistance = 0.1f;
 
-  private Transform _target;
+  private ITarget _target;
   private Coroutine _moveCoroutine;
 
-  public void SetTarget(Transform target)
+  public void SetTarget(ITarget target)
   {
     _target = target;
 
@@ -33,14 +33,14 @@ public class BotMover : MonoBehaviour
   {
     while (_target != null)
     {
-      if (transform.position.IsEnoughClose(_target.position, _minDistance))
+      if (transform.position.IsEnoughClose(_target.Transform.position, _minDistance))
       {
         _target = null;
         yield break;
       }
 
-      transform.LookAt(_target);
-      transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
+      transform.LookAt(_target.Transform);
+      transform.position = Vector3.MoveTowards(transform.position, _target.Transform.position, _speed * Time.deltaTime);
 
       yield return null;
     }

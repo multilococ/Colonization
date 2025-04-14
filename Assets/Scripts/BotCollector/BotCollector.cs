@@ -59,7 +59,7 @@ public class BotCollector : MonoBehaviour
 
     private IEnumerator GoToTarget()
     {
-        _botMover.SetTarget(_currentTarget.Transform);
+        _botMover.SetTarget(_currentTarget);
 
         while (_botMover.HasTarget())
         {
