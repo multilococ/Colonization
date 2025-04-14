@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class GameResource : MonoBehaviour
+public class GameResource : MonoBehaviour, ITarget
 {
    [SerializeField] private ResourceType _resourceType;
 
@@ -20,6 +20,8 @@ public class GameResource : MonoBehaviour
     public int Quantity => _quantity;
 
     public bool IsDetected => _isDetected;
+
+    public Transform Transform => transform;
 
     public void Init(Vector3 spawmPosition)
     {
