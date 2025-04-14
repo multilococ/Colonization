@@ -7,7 +7,7 @@ public class MilitaryBase : MonoBehaviour
     [SerializeField] private ResourceScanner _resourceScanner;
     [SerializeField] private BotCreator _botCreater;
     [SerializeField] private Warehouse _warehouse;
-    [SerializeField] private BaseCreatorSender _baseCreaterSender;
+    [SerializeField] private BaseCreator _baseCreaterSender;
     [SerializeField] private ScanedResourceStorage _scanedResourceStorage;
     [SerializeField] private Flag _flag;
     [SerializeField] private FlagInstaller _flagInstaller;

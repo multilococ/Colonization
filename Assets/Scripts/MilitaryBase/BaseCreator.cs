@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class BaseCreatorSender : MonoBehaviour
+public class BaseCreator : MonoBehaviour
 {
     [SerializeField] private MilitaryBase _basePrefab;
     [SerializeField] private Warehouse _warehouse;
