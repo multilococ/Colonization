@@ -20,6 +20,11 @@ public class BotCollector : MonoBehaviour
     private void Awake()
     {
         _isAvaliable = true;
+
+        if(_homePoint != null)
+        {
+            _homePoint.Occupy();
+        }
     }
 
     private void OnEnable()

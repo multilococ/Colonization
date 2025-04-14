@@ -16,7 +16,7 @@ public class ResourceScanner : MonoBehaviour
             {
                 if (hit.TryGetComponent(out GameResource gameResource))
                 {
-                    if (gameResource.IsDtetected == false)
+                    if (gameResource.IsDetected == false)
                     {
                         gameResource.Detect();
                         _scanedResourceStorage.Add(gameResource);

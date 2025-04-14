@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ScanedResourceStorage : MonoBehaviour
 {
-    private List<GameResource> _scanedRosources;
+    [SerializeField] private List<GameResource> _scanedRosources;
 
     private void Awake()
     {

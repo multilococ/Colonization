@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BotCreater : MonoBehaviour
+public class BotCreator : MonoBehaviour
 {
     [SerializeField] private BotCollector _botPrefab;
     [SerializeField] private List<BotHomePoint> _botHomePoints;

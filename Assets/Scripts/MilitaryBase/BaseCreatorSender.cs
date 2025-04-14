@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class BaseCreater : MonoBehaviour
+public class BaseCreatorSender : MonoBehaviour
 {
     [SerializeField] private MilitaryBase _basePrefab;
     [SerializeField] private Warehouse _warehouse;
@@ -17,20 +17,20 @@ public class BaseCreater : MonoBehaviour
 
     public void SendFreeBotTo(Transform point) 
     {
-        if (_warehouse.InspectEnoughResources(_oilPrice, _supplyPrice, _waterPrice) && _barracks.InspectFreeBots())
+        if (_warehouse.InspectEnoughResources(_oilPrice, _supplyPrice, _waterPrice) && _barracks.InspectFreeBots() && _freeBot == null)
         {
             _warehouse.Buy(_oilPrice, _supplyPrice, _waterPrice);
 
             _freeBot = _barracks.GetBot();
 
             _freeBot.GoTo(point);
-            _freeBot.Arrived += CreateNewBase;
+            _freeBot.Arrived += SpawnBase;
         }
     }
 
-    private void CreateNewBase(Vector3 basePosition) 
+    private void SpawnBase(Vector3 basePosition) 
     {
-        _freeBot.Arrived -= CreateNewBase;
+        _freeBot.Arrived -= SpawnBase;
 
         MilitaryBase militaryBase = Instantiate(_basePrefab, basePosition, Quaternion.identity);
 

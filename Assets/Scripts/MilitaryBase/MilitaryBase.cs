@@ -5,15 +5,15 @@ public class MilitaryBase : MonoBehaviour
 {
     [SerializeField] private Barracks _barracks;
     [SerializeField] private ResourceScanner _resourceScanner;
-    [SerializeField] private BotCreater _botCreater;
+    [SerializeField] private BotCreator _botCreater;
     [SerializeField] private Warehouse _warehouse;
-    [SerializeField] private BaseCreater _baseCreater;
+    [SerializeField] private BaseCreatorSender _baseCreaterSender;
     [SerializeField] private ScanedResourceStorage _scanedResourceStorage;
     [SerializeField] private Flag _flag;
     [SerializeField] private FlagInstaller _flagInstaller;
+    [SerializeField] private float _scanDelay = 3f;
 
     private float _workDelay = 1f;
-    private float _scanDelay = 3f;
 
     private void Start()
     {
@@ -23,14 +23,12 @@ public class MilitaryBase : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_flagInstaller != null)
-            _baseCreater.Created += _flagInstaller.Disable;
+        _baseCreaterSender.Created += _flagInstaller.Disable;
     }
 
     private void OnDisable()
     {
-        if (_flagInstaller != null)
-            _baseCreater.Created -= _flagInstaller.Disable;
+        _baseCreaterSender.Created -= _flagInstaller.Disable;
     }
 
     public void AcceptBot(BotCollector botCollector)
@@ -48,20 +46,12 @@ public class MilitaryBase : MonoBehaviour
 
             CollectResource();
 
-            if (_flagInstaller != null && _baseCreater != null)
+            if (_flagInstaller.Instaled == true && _barracks.BotsCount > 1)
             {
-                if (_flagInstaller.Instaled == true)
-                {
-                    _baseCreater.SendFreeBotTo(_flag.transform);
-                }
-                else
-                {       
-                    CreateNewBot();
-                }
+                _baseCreaterSender.SendFreeBotTo(_flag.transform);
             }
             else
             {
-                CollectResource();
                 CreateNewBot();
             }
         }

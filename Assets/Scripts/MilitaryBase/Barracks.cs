@@ -6,6 +6,8 @@ public class Barracks : MonoBehaviour
     [SerializeField] private List<BotCollector> _bots;
     [SerializeField] private List<BotHomePoint> _botHomePoints;
 
+    public int BotsCount => _bots.Count;
+
     public void SendFreeBotTo(Transform target) 
     {
         foreach (BotCollector bot in _bots) 

@@ -19,7 +19,7 @@ public class GameResource : MonoBehaviour
 
     public int Quantity => _quantity;
 
-    public bool IsDtetected => _isDetected;
+    public bool IsDetected => _isDetected;
 
     public void Init(Vector3 spawmPosition)
     {
