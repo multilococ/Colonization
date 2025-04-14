@@ -6,6 +6,7 @@ public class BotCollector : MonoBehaviour
     [SerializeField] private ResourcesGrabber _resourcesGrabber;
     [SerializeField] private BotMover _botMover;
     [SerializeField] private BotHomePoint _homePoint;
+    [SerializeField] private BaseSpawner _spawner;
 
     private Transform _target;
 
@@ -14,6 +15,7 @@ public class BotCollector : MonoBehaviour
     private bool _isAvaliable;
 
     public event Action<Vector3> Arrived;
+    public event Action BaseCreated;
 
     public bool IsAvaliable => _isAvaliable;
 
@@ -73,6 +75,13 @@ public class BotCollector : MonoBehaviour
     public void ReleaseHomePoint() 
     {
         _homePoint.Release();
+    }
+
+    public void SpawnBase(Vector3 basePositon) 
+    {
+        Arrived -= SpawnBase;
+        _spawner.Spawn(basePositon, this);
+        BaseCreated?.Invoke();
     }
 
     private void ReturnToHome()

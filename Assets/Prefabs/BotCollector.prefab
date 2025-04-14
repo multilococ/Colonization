@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 976449409986556304}
   - component: {fileID: 2134173838825587157}
   - component: {fileID: 8472900145300556057}
+  - component: {fileID: 3810513572464787043}
   m_Layer: 0
   m_Name: BotCollector
   m_TagString: Untagged
@@ -177,6 +178,7 @@ MonoBehaviour:
   _resourcesGrabber: {fileID: 3893738298623997711}
   _botMover: {fileID: 8472900145300556057}
   _homePoint: {fileID: 0}
+  _spawner: {fileID: 3810513572464787043}
 --- !u!114 &8472900145300556057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,6 +192,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 20
+--- !u!114 &3810513572464787043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6326069523022258945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 447f99bafbaa9684cb41cc275f575969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _basePrefab: {fileID: 7541455929735203494, guid: 9d4db0e900a105f4eadc54140f164fa5, type: 3}
 --- !u!1001 &4590687184989046878
 PrefabInstance:
   m_ObjectHideFlags: 0

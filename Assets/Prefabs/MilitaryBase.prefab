@@ -608,7 +608,7 @@ MonoBehaviour:
   _resourceScanner: {fileID: 5885011814163986406}
   _botCreater: {fileID: 2911393295631302062}
   _warehouse: {fileID: 3472666020533057242}
-  _baseCreater: {fileID: 1977802384319084197}
+  _baseCreaterSender: {fileID: 1977802384319084197}
   _scanedResourceStorage: {fileID: 2742231902319582159}
   _flag: {fileID: 7028550717871696171}
   _flagInstaller: {fileID: 6557947482972141971}
@@ -27706,7 +27706,7 @@ GameObject:
   - component: {fileID: 8896115091867144588}
   - component: {fileID: 1977802384319084197}
   m_Layer: 0
-  m_Name: BaseCreator
+  m_Name: BaseCreatorSender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27739,7 +27739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb0ec0bdbc398af47938acf4f3771dbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _basePrefab: {fileID: 7541455929735203494}
   _warehouse: {fileID: 3472666020533057242}
   _barracks: {fileID: 1960005596121977446}
 --- !u!1 &4624960340802548901
