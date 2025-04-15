@@ -16,6 +16,8 @@ public class ResourcesGrabber : MonoBehaviour
 
     public bool HasResource => _hasResource;
 
+    public GameResource GrabbedResource => _grabbedResource;
+
     private void Awake()
     {
         _grabCollider = GetComponent<BoxCollider>();

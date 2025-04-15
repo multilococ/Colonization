@@ -4,10 +4,13 @@ using UnityEngine;
 public class ScanedResourceStorage : MonoBehaviour
 {
     [SerializeField] private List<GameResource> _scanedRosources;
+   
+    private List<GameResource> _expectedResources;
 
     private void Awake()
     {
         _scanedRosources = new List<GameResource>();
+        _expectedResources = new List<GameResource>();
     }
 
     public void Add(GameResource gameResource) 
@@ -24,8 +27,24 @@ public class ScanedResourceStorage : MonoBehaviour
         {
             gameResource = _scanedRosources[0];
             _scanedRosources.Remove(gameResource);
+            _expectedResources.Add(gameResource);
         }
 
         return gameResource;
     }
+
+    public bool TryVerifyResource(GameResource gameResource) 
+    {
+        if (_expectedResources.Count > 0) 
+        {
+            if (_expectedResources.Contains(gameResource))
+            {
+                _expectedResources.Remove(gameResource);
+                
+                return true;
+            }
+        }
+
+        return false;
+    }  
 }

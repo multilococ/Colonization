@@ -34,6 +34,7 @@ public class MilitaryBase : MonoBehaviour
     public void AcceptBot(BotCollector botCollector)
     {
         _barracks.AddBot(botCollector);
+        botCollector.ReturnToHome();
     }
 
     private IEnumerator Work()
@@ -48,7 +49,7 @@ public class MilitaryBase : MonoBehaviour
 
             if (_flagInstaller.Instaled == true && _barracks.BotsCount > 1)
             {
-                _baseCreaterSender.SendFreeBotTo(_flag.transform);
+                _baseCreaterSender.SendFreeBotTo(_flag);
             }
             else
             {
@@ -89,7 +90,7 @@ public class MilitaryBase : MonoBehaviour
             GameResource freeResource = _scanedResourceStorage.GetFirstResource();
 
             if (freeResource != null)
-                _barracks.SendFreeBotTo(freeResource.transform);
+                _barracks.SendFreeBotTo(freeResource);
         }
     }
 }

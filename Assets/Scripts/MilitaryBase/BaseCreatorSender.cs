@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class BaseCreatorSender : MonoBehaviour
 {
-
     [SerializeField] private Warehouse _warehouse;
     [SerializeField] private Barracks _barracks;
 
@@ -14,17 +13,23 @@ public class BaseCreatorSender : MonoBehaviour
     private int _supplyPrice = 5;
 
     public event Action Created;
-    public void SendFreeBotTo(Transform point) 
+
+    public void SendFreeBotTo(ITarget point) 
     {
         if (_warehouse.InspectEnoughResources(_oilPrice, _supplyPrice, _waterPrice) && _barracks.InspectFreeBots() && _freeBot == null)
         {
             _warehouse.Buy(_oilPrice, _supplyPrice, _waterPrice);
 
-            _freeBot = _barracks.GetBot();
+            if (_barracks.TryGetBot(out BotCollector freeBot))
+            {
+                _freeBot = freeBot;
+            }
 
-            _freeBot.GoTo(point);
-            _freeBot.Arrived += _freeBot.SpawnBase;
-            _freeBot.BaseCreated += ReleaseBot;
+            if (freeBot != null)
+            {
+                _freeBot.GoTo(point);
+                _freeBot.BaseCreated += ReleaseBot;
+            }
         }
     }
 

@@ -8,7 +8,7 @@ public class Barracks : MonoBehaviour
 
     public int BotsCount => _bots.Count;
 
-    public void SendFreeBotTo(Transform target) 
+    public void SendFreeBotTo(ITarget target) 
     {
         foreach (BotCollector bot in _bots) 
         {
@@ -42,7 +42,7 @@ public class Barracks : MonoBehaviour
             {
                 _bots.Add(botCollector);
                 botCollector.SetHomePoint(homePoint);
-                botCollector.GoTo(homePoint.transform);
+                botCollector.GoTo(homePoint);
                 homePoint.Occupy();
 
                 break;
@@ -50,9 +50,9 @@ public class Barracks : MonoBehaviour
         }
     }
 
-    public BotCollector GetBot() 
+    public bool TryGetBot(out BotCollector botCollector) 
     {
-        BotCollector botCollector = null;
+        botCollector = null;
 
         foreach(BotCollector bot in _bots) 
         {
@@ -62,9 +62,14 @@ public class Barracks : MonoBehaviour
             }
         }
 
-        _bots.Remove(botCollector);
-        botCollector.ReleaseHomePoint();
+        if (botCollector != null)
+        {
+            _bots.Remove(botCollector);
+            botCollector.ReleaseHomePoint();
+            
+            return true;
+        }
 
-        return botCollector;
+        return false;
     }
 }

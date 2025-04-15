@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class TransferZone : MonoBehaviour
 {
+    [SerializeField] private ScanedResourceStorage _resourceStorage;
+
     public event Action<GameResource> Transfered;
 
     private void OnTriggerEnter(Collider collider)
@@ -12,10 +14,13 @@ public class TransferZone : MonoBehaviour
         {
             if (resourcesGrabber.HasResource)
             {
-                GameResource gameResource = resourcesGrabber.GetResource();
+                if (_resourceStorage.TryVerifyResource(resourcesGrabber.GrabbedResource))
+                {
+                    GameResource gameResource = resourcesGrabber.GetResource();
 
-                Transfered?.Invoke(gameResource);
-                gameResource.Reset();
+                    Transfered?.Invoke(gameResource);
+                    gameResource.Reset();
+                }
             }
         }
     }
